@@ -1,0 +1,120 @@
+/* Reset */
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+/* Navigation Bar */
+.navigationBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: aquamarine;
+    padding: 0.5rem;
+}
+
+.Content-Holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    background-color: #f0f0f0;
+    width: 100%;
+    min-height: 80vh;
+}
+
+.Note-holder {
+    margin: 2rem;
+    background-color: #fff;
+    width: 95%;
+}
+
+.Notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Note & Create Note Cards */
+.note-container, .create-note-card {
+    border: 2px solid #000;
+    border-radius: 1rem;
+    background-color: aliceblue;
+    padding: 1rem;
+    width: 300px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.note-container:hover, .create-note-card:hover {
+    transform: scale(1.02);
+}
+
+.note-holder, .create-note-card form {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.note-content, .create-note-card form textarea {
+    white-space: pre-wrap;
+}
+
+.button-holder {
+    display: none;
+    justify-content: space-between;
+}
+
+.note-container.expanded, .create-note-card.open {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 500px;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.note-container.expanded .button-holder, .create-note-card.open .button-holder {
+    display: flex;
+}
+
+/* Collapsed Create Note */
+.create-note-collapsed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.plus-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.5rem;
+}
+
+input, textarea {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    margin-top: 0.3rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}

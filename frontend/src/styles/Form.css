@@ -1,0 +1,88 @@
+
+body {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+.Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.Main-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+    background-color: bisque;
+    border-radius: 2rem;
+}
+
+
+.Main-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: gray;
+    height: auto;
+    width: 500px;
+    border-radius: 1.2rem;
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+.form-container h1 {
+    font-size: 2rem;
+    align-self: center;
+}
+
+.user-input {
+    & h1 {
+        font-size: 1.5rem;
+    }
+    & input {
+        font-size: 1rem;
+        padding: 0.3rem;
+        margin-left: 1.2rem;
+        width: 450px;
+        border-radius: 0.3rem ;
+    }
+}
+
+.loading-container {
+    align-self: center;
+}
+
+.form-button {
+    align-self: center;
+    width: 100px;
+    padding: 0.3rem;
+    transition: 0.2s ease-in-out;
+    &:hover {
+        transform: scale(1.1);
+        background-color: lightgreen;
+    }
+}
+
+a {
+    align-self: flex-end;
+    border: none;
+    & button {
+        padding: 0.2rem;
+        transition: 0.2s ease-in-out;
+    }
+    & button:hover {
+        transform: scale(1.1);
+        background-color: lightgreen;
+    }
+}
