@@ -4,6 +4,7 @@ import Note from "../components/Note";
 import AdminRecycleBin from "../components/AdminRecycleBin";
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
+import MarkdownEditor from "../components/MarkdownEditor";
 
 function AdminHome() {
     const [users, setUsers] = useState([]);
@@ -11,6 +12,7 @@ function AdminHome() {
     const [userNotes, setUserNotes] = useState([]);
     const [deletedNotes, setDeletedNotes] = useState([]); // new: shared with RecycleBin
     const [expandedNoteId, setExpandedNoteId] = useState(null);
+    const [editingNote, setEditingNote] = useState(null);
 
     const navigate = useNavigate();
 

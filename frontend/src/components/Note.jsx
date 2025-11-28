@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 function Note({ note, onDelete, onEdit, isExpanded, onExpand, disabled }) {
     const [isEditing, setIsEditing] = useState(false);
     const [editTitle, setEditTitle] = useState(note.title);
-    const [editContent, setEditContent] = useState(note.content);
-
+    const editContentRef = useRef(note.content); // store content in ref to avoid rerender
     const holderRef = useRef(null);
+
     const formattedDate = new Date(note.create_at).toLocaleDateString("en-PH");
 
     const toggleExpand = () => {
-        if (!isEditing && !disabled) {
-            onExpand();
-        }
+        if (!isEditing && !disabled) onExpand();
     };
 
     const handleSave = () => {
-        onEdit(note.id, editTitle, editContent);
+        onEdit(note.id, editTitle, editContentRef.current);
         setIsEditing(false);
     };
 
@@ -40,23 +41,34 @@ function Note({ note, onDelete, onEdit, isExpanded, onExpand, disabled }) {
                             onChange={(e) => setEditTitle(e.target.value)}
                             onClick={(e) => e.stopPropagation()}
                         />
-                        <textarea
-                            className="content-edit"
-                            value={editContent}
-                            onChange={(e) => setEditContent(e.target.value)}
-                            onClick={(e) => e.stopPropagation()}
+
+                        <SimpleMDE
+                            value={editContentRef.current}
+                            onChange={(value) => (editContentRef.current = value)}
+                            options={{
+                                spellChecker: false,
+                                autofocus: true,
+                                placeholder: "Write your story using markdown...",
+                                status: false,
+                                toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "preview"],
+                            
+                            }}
+                            className="textarea-holder"
                         />
                     </>
                 ) : (
                     <>
                         <p className="note-title">{note.title}</p>
-                        <div className="note-content">{note.content}</div>
+                        <div className="note-content">
+                            <ReactMarkdown>{note.content}</ReactMarkdown>
+                        </div>
                     </>
                 )}
             </div>
 
             <div className="button-holder">
                 <p className="note-date">{formattedDate}</p>
+
                 {isEditing ? (
                     <>
                         <button

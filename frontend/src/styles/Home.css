@@ -28,7 +28,30 @@ html, body {
     margin: 2rem;
     background-color: #fff;
     width: 95%;
+
 }
+
+.note-holder::-webkit-scrollbar {
+    display: none;               
+}
+
+.textarea-holder {
+    height: 400px;
+}
+
+.CodeMirror-scroll {
+    overflow-y: scroll;
+    height: 200px;
+}
+.CodeMirror-code {
+    padding-bottom: 5px;
+}
+
+.CodeMirror-line {
+    padding: 1rem;
+}
+
+  
 
 .Notes {
     display: flex;
@@ -48,8 +71,9 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden;
+    overflow-y: auto;
     cursor: pointer;
+    gap: 1rem;
     transition: transform 0.2s ease;
 }
 
