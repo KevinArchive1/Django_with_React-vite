@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api";
 import "../styles/RecycleBin.css";
 
-function RecycleBin({ isOpen, onClose }) {
+function RecycleBin({ isOpen, onClose, refresh }) {  // <-- add refresh prop
   const [deletedNotes, setDeletedNotes] = useState([]);
 
   const fetchDeletedNotes = () => {
@@ -17,7 +17,10 @@ function RecycleBin({ isOpen, onClose }) {
 
   const restoreNote = (id) => {
     api.patch(`/api/notes/restore/${id}/`)
-      .then(() => fetchDeletedNotes())
+      .then(() => {
+        fetchDeletedNotes(); // refresh recycle bin
+        if (refresh) refresh(); // <-- refresh main Home list
+      })
       .catch(err => alert(err.response?.data || err.message));
   };
 

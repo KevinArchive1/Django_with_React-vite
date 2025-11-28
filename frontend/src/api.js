@@ -1,20 +1,20 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api/";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
 
-// Request interceptor: attach access token
+// Attach access token
 axiosInstance.interceptors.request.use(config => {
   const token = localStorage.getItem("access");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-// Response interceptor: auto-refresh
+// Refresh token if 401
 axiosInstance.interceptors.response.use(
   response => response,
   async error => {
@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(
       original._retry = true;
       try {
         const refresh = localStorage.getItem("refresh");
-        const res = await axios.post(`${BASE_URL}api/token/refresh/`, { refresh });
+        const res = await axios.post(`${BASE_URL}token/refresh/`, { refresh });
         const newAccess = res.data.access;
         localStorage.setItem("access", newAccess);
         original.headers.Authorization = `Bearer ${newAccess}`;

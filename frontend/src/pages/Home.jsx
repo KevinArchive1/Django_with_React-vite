@@ -1,68 +1,82 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import api from "../api";
-import Note from "../components/Note";
+import Story from "../components/Story";
 import RecycleBin from "../components/RecycleBin";
 import { Link } from "react-router-dom";
 import "../styles/Home.css";
 
 function Home() {
-  const [notes, setNotes] = useState([]);
-  const [content, setContents] = useState("");
-  const [title, setTitles] = useState("");
-
+  const [stories, setStories] = useState([]);
   const [expandedCard, setExpandedCard] = useState(null);
-  const [isRecycleOpen, setIsRecycleOpen] = useState(false); // For Recycle Bin toggle
+  const [isRecycleOpen, setIsRecycleOpen] = useState(false);
 
-  // Fetch notes on mount
+  const [newTitle, setNewTitle] = useState("");
+  const [newContent, setNewContent] = useState("");
+  const [newGenre, setNewGenre] = useState("");
+
+  const titleRef = useRef(null);
+
   useEffect(() => {
-    getNotes();
+    fetchStories();
   }, []);
 
-  const getNotes = () => {
-    api.get("/api/notes/")
-      .then(res => setNotes(res.data))
+  useEffect(() => {
+    // Autofocus on create title when expanded
+    if (expandedCard === "create" && titleRef.current) {
+      titleRef.current.focus();
+    }
+
+    // Scroll back to top when collapsed
+    if (expandedCard === null) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [expandedCard]);
+
+  const fetchStories = () => {
+    api.get("/api/stories/")
+      .then(res => setStories(res.data))
       .catch(err => alert(err));
   };
 
-  // Soft delete note
-  const deleteNotes = (id) => {
-    api.delete(`/api/notes/delete/${id}/`)
-      .then(res => {
-        if (res.status === 204) {
-          alert("Note deleted!");
-          if (expandedCard === id) setExpandedCard(null);
-          getNotes();
-        } else {
-          alert("Failed to delete note.");
-        }
-      })
-      .catch(err => alert(err));
+  const handleCardToggle = (cardId) => {
+    setExpandedCard(prev => prev === cardId ? null : cardId);
   };
 
-  const editNotes = (id, updateTitle, updateContent) => {
-    api.put(`/api/notes/edit/${id}/`, { title: updateTitle, content: updateContent })
-      .then(res => {
-        if (res.status === 200 || res.status === 204) {
-          getNotes();
-        }
-      })
-      .catch(err => alert(err));
-  };
-
-  const createNotes = (e) => {
+  const createStory = (e) => {
     e.preventDefault();
-    api.post("/api/notes/", { content, title })
-      .then(res => {
-        if (res.status === 201) {
-          alert("Note created!");
-          getNotes();
-          setTitles("");
-          setContents("");
-          setExpandedCard(null); 
-        } else {
-          alert("Failed to create note.");
-        }
-      })
+    api.post("/api/stories/", { 
+      title: newTitle, 
+      content: newContent, 
+      genre: newGenre 
+    })
+    .then(res => {
+      if (res.status === 201) {
+        fetchStories();
+        setNewTitle("");
+        setNewContent("");
+        setNewGenre("");
+        setExpandedCard(null);
+      }
+    })
+    .catch(err => alert(err));
+  };
+
+  const editStory = (id, title, content, genre) => {
+    api.patch(`/api/stories/${id}/edit/`, { title, content, genre })
+      .then(res => { if (res.status === 200) fetchStories(); })
+      .catch(err => alert(err));
+  };
+
+  const deleteStory = (id) => {
+    if (!window.confirm("Are you sure you want to delete this story?")) return;
+    api.delete(`/api/notes/delete/${id}/`)
+      .then(res => { if (res.status === 204) fetchStories(); })
+      .catch(err => alert(err));
+  };
+
+  const addChapter = (storyId) => {
+    api.post("/api/chapters/create/", { story: storyId })
+      .then(res => { if (res.status === 201) fetchStories(); })
       .catch(err => alert(err));
   };
 
@@ -73,59 +87,82 @@ function Home() {
         <h4>Welcome</h4>
         <div className="nav-buttons">
           <button onClick={() => setIsRecycleOpen(true)}>Recycle Bin</button>
-          <Link to="/logout">
-            <button>Logout</button>
-          </Link>
+          <Link to="/logout"><button>Logout</button></Link>
         </div>
       </div>
 
       <div className="Content-Holder">
         <div className="Note-holder">
-          <h2>Notes</h2>
+          <h2>Stories</h2>
           <div className="Notes">
 
-            {/* Create Note Card */}
+            {/* Create Story Card */}
             <div
               className={`create-note-card ${expandedCard === "create" ? "open" : ""}`}
-              onClick={() => setExpandedCard(prev => prev === "create" ? null : "create")}
             >
               {expandedCard !== "create" ? (
-                <div className="create-note-collapsed">
+                <div
+                  className="create-note-collapsed"
+                  onClick={() => handleCardToggle("create")}
+                >
                   <img src="/plus.png" alt="Add" className="plus-icon" />
-                  <p>Create Note</p>
+                  <p>Create Story</p>
                 </div>
               ) : (
-                <form className="CreateNote" onSubmit={createNotes} onClick={(e) => e.stopPropagation()}>
-                  <h2>Create a Note</h2>
+                <form
+                  onSubmit={createStory}
+                  onClick={e => e.stopPropagation()}
+                >
+                  <h2>Create a Story</h2>
+
                   <label>Title:</label>
                   <input
                     type="text"
                     required
-                    value={title}
-                    onChange={(e) => setTitles(e.target.value)}
+                    value={newTitle}
+                    onChange={e => setNewTitle(e.target.value)}
+                    ref={titleRef}
                   />
-                  <label>Content:</label>
+
+                  <label>Genre:</label>
+                  <input
+                    type="text"
+                    required
+                    value={newGenre}
+                    onChange={e => setNewGenre(e.target.value)}
+                  />
+
+                  <label>Description:</label>
                   <textarea
                     required
-                    value={content}
-                    onChange={(e) => setContents(e.target.value)}
+                    value={newContent}
+                    onChange={e => setNewContent(e.target.value)}
                   />
-                  <button type="submit">Submit</button>
-                  <button type="button" onClick={() => setExpandedCard(null)}>Cancel</button>
+
+                  <div className="button-holder">
+                    <button type="submit">Submit</button>
+                    <button type="button" onClick={() => setExpandedCard(null)}>
+                      Close
+                    </button>
+                  </div>
                 </form>
               )}
             </div>
 
-            {/* Existing Notes */}
-            {notes.map(note => (
-              <Note
-                key={note.id}
-                note={note}
-                onEdit={editNotes}
-                onDelete={deleteNotes}
-                isExpanded={expandedCard === note.id}
-                onExpand={() => setExpandedCard(prev => prev === note.id ? null : note.id)}
-                disabled={expandedCard !== null && expandedCard !== note.id}
+            {/* Existing Stories */}
+            {stories.map(story => (
+              <Story
+                key={story.id}
+                story={story}
+                isExpanded={expandedCard === story.id}
+                onExpand={() => handleCardToggle(story.id)}
+                onEditStory={editStory}
+                onAddChapter={addChapter}
+                onDeleteStory={deleteStory}
+                disabled={expandedCard !== null && expandedCard !== story.id}
+                refresh={fetchStories}
+                showCloseButton={true} // new prop
+                onClose={() => setExpandedCard(null)} // new prop
               />
             ))}
 
@@ -133,10 +170,10 @@ function Home() {
         </div>
       </div>
 
-      {/* Recycle Bin Overlay */}
       <RecycleBin
         isOpen={isRecycleOpen}
         onClose={() => setIsRecycleOpen(false)}
+        refresh={fetchStories}
       />
     </div>
   );
