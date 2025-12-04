@@ -67,6 +67,11 @@ class AdminEditStoryView(generics.UpdateAPIView):
     def get_queryset(self):
         return Note.objects.all()
 
+    def patch(self, request, *args, **kwargs):
+        kwargs['partial'] = True  # ADD THIS LINE
+        return self.update(request, *args, **kwargs)
+
+
 
 class AdminSoftDeleteStoryView(APIView):
     permission_classes = [permissions.IsAdminUser]
@@ -237,7 +242,15 @@ class ChapterEditView(generics.UpdateAPIView):
     lookup_field = "pk"
 
     def get_queryset(self):
-        return Chapter.objects.filter(story__author=self.request.user)
+        user = self.request.user
+        
+        # Admin can edit ALL chapters
+        if user.is_staff:
+            return Chapter.objects.all()
+        
+        # normal users only their own
+        return Chapter.objects.filter(story__author=user)
+
 
 
 class ChapterDeleteView(generics.DestroyAPIView):
@@ -247,4 +260,10 @@ class ChapterDeleteView(generics.DestroyAPIView):
     lookup_field = "pk"
 
     def get_queryset(self):
-        return Chapter.objects.filter(story__author=self.request.user)
+        user = self.request.user
+
+        if user.is_staff:
+            return Chapter.objects.all()
+
+        return Chapter.objects.filter(story__author=user)
+

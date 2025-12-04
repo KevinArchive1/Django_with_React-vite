@@ -1,37 +1,132 @@
+/* Overlay */
 .recycle-bin-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .recycle-bin-container {
-    background: white;
-    padding: 20px;
-    width: 500px;
-    max-height: 80%;
-    overflow-y: auto;
-    border-radius: 10px;
-    position: relative;
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    cursor: pointer;
-  }
-  
-  .deleted-notes-list .note-container {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Container */
+.recycle-bin-container {
+  background: #FAEDCB;
+  padding: 20px;
+  width: 820px;
+  height: 530px;
+  border-radius: 50px;
+  position: relative;
+  overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
+  box-sizing: border-box;
+}
+
+/* Title */
+.recycle-bin-container h3 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 48px;
+  font-family: 'Source Sans Pro', sans-serif;
+  margin-top: 10px;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #FF7F7F;
+  border: none;
+  color: black;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Deleted notes grid */
+.deleted-notes-list {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* FIX: keeps 2 equal columns */
+  gap: 20px;
+  padding: 10px;
+}
+
+/* Note card */
+.deleted-notes-list .note-container {
+  background-color: #8781E655;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 260px;
+}
+
+.note-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.note-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+/* Buttons inside note */
+.note-container button {
+  cursor: pointer;
+  border: none;
+  border-radius: 50px;
+  padding: 8px 12px;
+  font-weight: 600;
+}
+
+/* Restore */
+.restore-btn {
+  background-color: #C9E4DE;
+}
+
+.restore-btn:hover {
+  background-color: #AEDFD6;
+}
+
+/* Delete */
+.delete-btn {
+  background-color: #FFA9A9;
+  margin-top: 5px;
+}
+
+.delete-btn:hover {
+  background-color: #FF7F7F;
+}
+
+/* Scrollbar styling */
+.recycle-bin-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.recycle-bin-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.recycle-bin-container::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 4px;
+  border: 2px solid #FAEDCB;
+}
+
+/* Firefox scrollbar */
+.recycle-bin-container {
+  scrollbar-width: thin;
+  scrollbar-color: white transparent;
+}

@@ -4,6 +4,7 @@ import Story from "../components/Story";
 import RecycleBin from "../components/RecycleBin";
 import { Link } from "react-router-dom";
 import "../styles/Home.css";
+import AddImage from "../assets/plus.png"
 
 function Home() {
   const [stories, setStories] = useState([]);
@@ -98,14 +99,14 @@ function Home() {
 
             {/* Create Story Card */}
             <div
-              className={`create-note-card ${expandedCard === "create" ? "open" : ""}`}
+              className={`create-note-card ${expandedCard === "create" ? "open" : ""}`} onClick={() => handleCardToggle("create")}
             >
               {expandedCard !== "create" ? (
                 <div
                   className="create-note-collapsed"
-                  onClick={() => handleCardToggle("create")}
+                  
                 >
-                  <img src="/plus.png" alt="Add" className="plus-icon" />
+                  <img src={AddImage} alt="Add" className="plus-icon" />
                   <p>Create Story</p>
                 </div>
               ) : (
@@ -139,9 +140,9 @@ function Home() {
                     onChange={e => setNewContent(e.target.value)}
                   />
 
-                  <div className="button-holder">
-                    <button type="submit">Submit</button>
-                    <button type="button" onClick={() => setExpandedCard(null)}>
+                  <div className="button-holder-create">
+                    <button className="submit" type="submit">Submit</button>
+                    <button className="close" type="button" onClick={() => setExpandedCard(null)}>
                       Close
                     </button>
                   </div>

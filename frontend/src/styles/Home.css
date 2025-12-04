@@ -1,343 +1,816 @@
 /* Reset */
 html, body {
-    padding: 0;
-    margin: 0;
-    font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+
 }
 
 /* Navigation Bar */
 .navigationBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: aquamarine;
-    padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #8781E654; /* Soft lavender — matches your image */
+  padding: 0.75rem 1.5rem;
+  font-family: sans-serif;
+  box-sizing: border-box;
 }
 
-/* Content Holder */
-.Content-Holder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    background-color: #f0f0f0;
-    width: 100%;
-    min-height: 80vh;
+.navigationBar h4 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #222;
 }
+
+.nav-buttons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.nav-buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1.5rem; /* Pill-shaped */
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  min-width: 80px;
+  transition: background-color 0.2s ease;
+  text-align: center;
+}
+
+.nav-buttons button:first-child {
+  background-color: #c4c4c4;
+  color: #333;
+}
+
+.nav-buttons button:first-child:hover {
+  background-color: #b0b0b0;
+}
+
+.nav-buttons button:last-child {
+  background-color: #ff9999;
+  color: rgb(0, 0, 0);
+}
+
+.nav-buttons button:last-child:hover {
+  background-color: #ff6666;
+}
+
+/* Responsive: Stack on small screens */
+@media (max-width: 768px) {
+  .navigationBar {
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1rem;
+  }
+
+  .navigationBar h4 {
+      font-size: 1.25rem;
+  }
+
+  .nav-buttons {
+      width: 100%;
+      justify-content: center;
+  }
+
+  .nav-buttons button {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+      min-width: auto;
+  }
+}
+
+/* _____________________________________________________________________________________ */
+/* Content Holder */
+/* .Content-Holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background-color: #faedcb;
+  width: 100%;
+  min-height: 80vh;
+} */
+/* _____________________________________________________________________________________ 
+  Naka comment out to kasi sabi ng AI nag doble raw yung tawag sa Content-Holder sa baba
+*/
+
 
 .Note-holder {
-    margin: 2rem;
-    background-color: #fff;
-    width: 95%;
+  margin: 2rem;
+  background-color: #fdfaef;
+  width: 95%;
+  border-radius: 30px;
 }
 
 .Note-holder::-webkit-scrollbar {
-    display: none;               
+  display: none;               
 }
 
 .textarea-holder {
-    height: 400px;
+  height: 400px;
 }
 
 /* CodeMirror for SimpleMDE */
 .CodeMirror-scroll {
-    overflow-y: scroll;
-    height: 200px;
+  overflow-y: scroll;
+  height: 200px;
 }
 .CodeMirror-code {
-    padding-bottom: 5px;
+  padding-bottom: 5px;
 }
 .CodeMirror-line {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .Notes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 /* Story & Create Story Cards */
 .note-container, .create-note-card, .story-container {
-    border: 2px solid #000;
-    border-radius: 1rem;
-    background-color: aliceblue;
-    padding: 1rem;
-    width: 300px;
-    height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow-y: auto;
-    cursor: pointer;
-    gap: 1rem;
-    transition: transform 0.2s ease, all 0.3s ease;
+  border: 2px solid #000;
+  border-radius: 1rem;
+  background-color: #f6f1ff;
+  width: 350px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+  cursor: pointer;
+  gap: 1rem;
+  transition: transform 0.2s ease, all 0.3s ease;
 }
 
-.note-container:hover, .create-note-card:hover, .story-container:hover {
-    transform: scale(1.02);
+.chapter-container {
+  overflow: hidden;
 }
+
+.chapter-container p{
+  margin: 1rem 0;
+}
+
+.note-container:hover,
+.story-container:hover,
+.create-note-card:hover {
+  transform: translateY(-3px) scale(1.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.10);
+}
+
 
 /* Story/Note Container & Create Story Form */
 .note-holder, .create-note-card form {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+  background: #FFF3D9;
+}
+
+.create-note-card form label {
+  align-self: flex-start;
+  font-weight: bold;
+  font-size: 0.9rem;
+
 }
 
 /* Content text wrapping */
 .note-content, .create-note-card form textarea, .story-description {
-    white-space: pre-wrap;
+  white-space: pre-wrap;
+}
+
+.create-note-card form textarea {
+  height: 150px;
+  resize: none;
 }
 
 /* Buttons hidden by default */
 .button-holder {
-    display: none;
-    justify-content: space-between;
+  display: none;
+  justify-content: space-between;
 }
+
+.button-holder-create {
+  gap: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-holder-create button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  min-width: 80px;
+  transition: background-color 0.2s ease;
+  text-align: center;
+  border: #000 solid 1px;
+}
+
+.button-holder-create .submit{
+  background-color: #9bdd9f;
+}
+
 
 /* Expanded Story / Note / Create Story Card */
 .note-container.expanded, .create-note-card.open, .story-container.expanded {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 600px;
-    height: 500px;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    background: #fff;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    overflow-y: auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 500px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  overflow-y: auto;
 }
 
 /* Show buttons when expanded */
 .note-container.expanded .button-holder, 
 .create-note-card.open .button-holder,
 .story-container.expanded .button-holder {
-    display: flex;
+  display: flex;
 }
-
+/* __________________________________________________________________________________________________ */
 /* Collapsed Create Story Card */
 .create-note-collapsed {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
 }
 
-.plus-icon {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 0.5rem;
+/* ___________________________________________________________________________________________________ 
+  Ito yung original na code para sa Create Story Card, pinalitan ko na siya ng bago sa baba kaso
+  icheck mo kasi mali yung pop up niyaaaaa huhu dito ako makakalbo na kanina pa
+*/
+
+/* Create Story Card - Collapsed State */
+.create-note-card {
+  background-color: #e0d8f0; /* Light purple — matches your image */
+  border: 1px solid #ccc;
+  border-radius: 1rem; /* Rounded corners */
+  width: 350px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border 0.2s ease;
 }
+
+.create-note-card:hover {
+  transform: scale(1.02);
+  border-color: #9370db; /* Slightly darker purple on hover */
+}
+
+/* Icon Style */
+.create-note-card .plus-icon {
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.5rem;
+}
+
+/* Text Style */
+.create-note-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+  text-align: center;
+}
+
+.create-note-card h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #222;
+}
+
+/* Optional: Add subtle shadow */
+.create-note-card {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Responsive: Smaller on mobile */
+@media (max-width: 768px) {
+  .create-note-card {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      padding: 1rem;
+      gap: 0.5rem;
+  }
+}
+
+/* From here pababa, wala pa me ginagalaw ulit */
 
 /* Input and Textarea */
 input, textarea {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 0.3rem;
-    border: 1px solid #ccc;
-    width: 100%;
-    box-sizing: border-box;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Buttons */
 button {
-    margin-top: 0.3rem;
-    padding: 0.5rem;
-    cursor: pointer;
+  margin-top: 0.3rem;
+  padding: 0.5rem;
+  cursor: pointer;
 }
 
 /* Chapter Navigation */
 .chapter-holder {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .chapter-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
 }
 
 .chapter-nav button {
-    padding: 0.3rem 0.6rem;
-    border-radius: 0.3rem;
-    border: 1px solid #ccc;
-    background: #e0e0e0;
-    cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  border: 1px solid #ccc;
+  background: #e0e0e0;
+  cursor: pointer;
 }
 
 .chapter-nav button.active {
-    background: #a0d8ef;
+  background: #a0d8ef;
 }
 
 /* Story description scroll */
-.story-description {
-    max-height: 150px;
-    overflow-y: auto;
-    white-space: pre-wrap;
-}
+/* .story-description {
+  max-height: 150px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+} */
 
 
 /* General container */
+/* Content Holder — Outer Background */
 .Content-Holder {
-    display: flex;
-    min-height: 100vh;
-    font-family: "Arial", sans-serif;
-    background-color: #f4f6f8;
-    color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background-color: #faedcb; /* Warm off-white — matches your image */
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Sidebar */
+.admin-sidebar {
+  width: 250px;
+  background-color: #1f2937;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.admin-sidebar h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #f9fafb;
+}
+
+.admin-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-sidebar li {
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.admin-sidebar li:hover {
+  background-color: #374151;
+}
+
+.admin-sidebar .selected-user {
+  background-color: #2563eb;
+}
+
+.logout-button {
+  background-color: #ef4444;
+  border: none;
+  padding: 10px;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logout-button:hover {
+  background-color: #b91c1c;
+}
+
+/* Main content */
+.Note-holder {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+}
+
+.Note-holder h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Story cards */
+.Notes {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.story-item, .note-item.deleted, .admin-note-item {
+  background-color: #f6f1ff;
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.story-item:hover, .note-item.deleted:hover, .admin-note-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 6px 12px rgba(0,0,0,0.12);
+}
+
+.story-item h4, .note-item.deleted h4, .admin-note-item h4 {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.story-item p, .note-item.deleted p, .admin-note-item p {
+  margin: 5px 0 10px;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.story-item strong {
+  color: #111827;
+}
+
+/* Buttons inside story cards */
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.button-group button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.button-group button:first-child {
+  background-color: #10b981;
+  color: #fff;
+}
+
+.button-group button:first-child:hover {
+  background-color: #059669;
+}
+
+.button-group button:last-child {
+  background-color: #ef4444;
+  color: #fff;
+}
+
+.button-group button:last-child:hover {
+  background-color: #b91c1c;
+}
+
+/* Recycle bin title */
+.admin-recycle-bin h3 {
+  margin-top: 30px;
+  font-size: 20px;
+  color: #111827;
+}
+
+/* Deleted story cards */
+.note-item.deleted {
+  border-left: 4px solid #ef4444;
+}
+
+
+
+/* Collapsed Story Card */
+.story-container {
+  background: #f6f1ff;
+  border: 1px solid #c7d3ff;
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 350px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.story-container:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.story-container h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #333;
+}
+
+.story-author, .story-genre {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+
+
+/* Expanded Story Popup */
+.story-container.expanded {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 850px;
+  height: 650px;
+  background: #FFF3D9;             /* soft beige background */
+  border: 2px solid #c7c0ff;       /* soft purple border */
+  border-radius: 25px;
+  padding: 2rem 3rem;
+  overflow-y: auto;
+  z-index: 20;
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.25);
+}
+
+/* Title centered, bold, larger */
+.story-container.expanded h2 {
+  text-align: center;
+  margin: 0;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3a2f60;
+}
+
+/* Author & Genre inline like screenshot */
+.story-container.expanded .story-author,
+.story-container.expanded .story-genre {
+  font-size: 1rem;
+  color: #3a3a3a;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+
+/* Story description box */
+.story-container.expanded .story-description {
+  background: #fff;
+  border: 2px solid #d8d8d8;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 15px 0 20px 0;
+}
+
+
+/* EDIT / DELETE / CLOSE buttons – styled like image */
+.story-container.expanded .button-holder {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.story-container.expanded .button-holder button {
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+
+/* Edit */
+.story-container.expanded .button-holder button:nth-child(1) {
+  background-color: #bfe6ff;
+}
+.story-container.expanded .button-holder button:nth-child(1):hover {
+  background-color: #91d2ff;
+}
+
+
+.story-container.expanded .button-holder button:hover {
+  background-color: #a58aff;
+}
+
+
+
+/* Chapter Buttons  */
+.chapter-holder button {
+  background-color: #c5b3ff;
+  border: none;
+  border-radius: 6px;
+  color: #000;
+  font-weight: bold;
+}
+
+.chapter-holder button:hover {
+  background-color: #a58aff;
+}
+
+/* Chapter Navigation */
+.chapter-nav button {
+  padding: 0.35rem 0.8rem;
+  background: #e7dfff;
+  border: 1px solid #b5a8ff;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.chapter-nav button:hover {
+  background-color: #d0c4ff;
+}
+
+.chapter-nav button.active {
+  background-color: #b49cff;
+  border-color: #8b71ff;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Add Chapter button (green like screenshot) */
+.chapter-nav button:last-child {
+  background-color: #d3ffd8;
+  border: 1px solid #9bdd9f;
+  font-weight: bold;
+}
+
+.chapter-nav button:last-child:hover {
+  background-color: #b2ffbf;
+}
+
+
+
+
+/* Chapter Content Box */
+.chapter-holder {
+  background: #fff;
+  border: 2px solid #dadada;
+  padding: 1.2rem;
+  border-radius: 15px;
+  margin-top: 1rem;
+}
+
+
+
+/* Soft Pastel Scrollbar Theme — Global */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d9c9ff #f6f1ff; /* (thumb, track) for Firefox */
+}
+
+/* Chrome / Edge Scrollbar Styling */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f6f1ff; /* very light lavender */
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #cfc0ff; /* pastel lavender */
+  border-radius: 10px;
+  border: 2px solid #f6f1ff; /* gives the thumb a soft edge */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #b6a3ff; /* darker pastel when hovered */
+}
+
+
+
+/* Pastel Fade + Float Animations */
+/* Fade + lift on load */
+@keyframes cardFadeIn {
+  0% { 
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
   }
-  
-  /* Sidebar */
-  .admin-sidebar {
-    width: 250px;
-    background-color: #1f2937;
-    color: #fff;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  100% { 
+      opacity: 1;
+      transform: translateY(0) scale(1);
   }
-  
-  .admin-sidebar h3 {
-    margin-bottom: 15px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #f9fafb;
+}
+
+/* Soft scale-up popup animation */
+@keyframes popupOpen {
+  0% {
+      opacity: 0;
+      transform: translate(-50%, -45%) scale(0.85);
   }
-  
-  .admin-sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
   }
-  
-  .admin-sidebar li {
-    padding: 10px 15px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.2s;
+}
+
+/* Soft scale-down close */
+@keyframes popupClose {
+  0% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
   }
-  
-  .admin-sidebar li:hover {
-    background-color: #374151;
+  100% {
+      opacity: 0;
+      transform: translate(-50%, -45%) scale(0.85);
   }
-  
-  .admin-sidebar .selected-user {
-    background-color: #2563eb;
-  }
-  
-  .logout-button {
-    background-color: #ef4444;
-    border: none;
-    padding: 10px;
-    color: #fff;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  
-  .logout-button:hover {
-    background-color: #b91c1c;
-  }
-  
-  /* Main content */
-  .Note-holder {
-    flex: 1;
-    padding: 25px;
-    overflow-y: auto;
-  }
-  
-  .Note-holder h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  /* Story cards */
-  .Notes {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-  }
-  
-  .story-item, .note-item.deleted, .admin-note-item {
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 15px 20px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.08);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  .story-item:hover, .note-item.deleted:hover, .admin-note-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 6px 12px rgba(0,0,0,0.12);
-  }
-  
-  .story-item h4, .note-item.deleted h4, .admin-note-item h4 {
-    margin-top: 0;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .story-item p, .note-item.deleted p, .admin-note-item p {
-    margin: 5px 0 10px;
-    font-size: 14px;
-    color: #4b5563;
-  }
-  
-  .story-item strong {
-    color: #111827;
-  }
-  
-  /* Buttons inside story cards */
-  .button-group {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
-  .button-group button {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
-  }
-  
-  .button-group button:first-child {
-    background-color: #10b981;
-    color: #fff;
-  }
-  
-  .button-group button:first-child:hover {
-    background-color: #059669;
-  }
-  
-  .button-group button:last-child {
-    background-color: #ef4444;
-    color: #fff;
-  }
-  
-  .button-group button:last-child:hover {
-    background-color: #b91c1c;
-  }
-  
-  /* Recycle bin title */
-  .admin-recycle-bin h3 {
-    margin-top: 30px;
-    font-size: 20px;
-    color: #111827;
-  }
-  
-  /* Deleted story cards */
-  .note-item.deleted {
-    border-left: 4px solid #ef4444;
-  }
-  
+}
+
+
+/* Animations for cards */
+.note-container,
+.story-container,
+.create-note-card {
+  animation: cardFadeIn 0.4s ease forwards;
+}
+
+
+/* Animations expand cards */
+.note-container.expanded,
+.story-container.expanded,
+.create-note-card.open {
+  animation: popupOpen 0.25s ease forwards;
+}
+
+
+
+/* Delete – red like screenshot */
+.story-container.expanded .button-holder button:nth-child(2) {
+  background-color: #ff7b7b;
+  color: white;
+}
+.story-container.expanded .button-holder button:nth-child(2):hover {
+  background-color: #ff5c5c;
+}
+
+/* Close */
+.story-container.expanded .button-holder button:nth-child(3) {
+  background-color: #d8d8d8;
+}
+.story-container.expanded .button-holder button:nth-child(3):hover {
+  background-color: #bfbfbf;
+}
+

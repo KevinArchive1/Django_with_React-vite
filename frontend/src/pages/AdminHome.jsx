@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import Story from "../components/Story";
 import AdminRecycleBin from "../components/AdminRecycleBin";
-import "../styles/Home.css";
+import "../styles/AdminHome.css";
 import { useNavigate } from "react-router-dom";
 
 function AdminHome() {
@@ -12,6 +12,12 @@ function AdminHome() {
   const [deletedStories, setDeletedStories] = useState([]);
   const [expandedStoryId, setExpandedStoryId] = useState(null);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredUsers = users.filter(user =>
+    user.username.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  
   const navigate = useNavigate();
 
   // Fetch all users
@@ -93,26 +99,37 @@ const handleRestoreStory = async (restoredStory) => {
   };
 
   return (
-    <div className="Content-Holder">
+    <div className="Content-Holder1">
       {/* Sidebar */}
       <div className="admin-sidebar">
-        <h3>Users</h3>
-        <ul>
-          {users.map(user => (
-            <li
-              key={user.id}
-              onClick={() => handleUserClick(user)}
-              className={selectedUser?.id === user.id ? "selected-user" : ""}
-            >
-              {user.username}
-            </li>
-          ))}
-        </ul>
+        <div className="search-holder">
+          <h3>Users</h3>
+          <input
+            type="text"
+            placeholder="Search user..."
+            className="user-search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+
+          <ul>
+            {filteredUsers.map(user => (
+              <li
+                key={user.id}
+                onClick={() => handleUserClick(user)}
+                className={selectedUser?.id === user.id ? "selected-user" : ""}
+              >
+                {user.username}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
 
       {/* Stories */}
-      <div className="Note-holder">
+      <div className="Note-holder1">
         <h2>{selectedUser ? `${selectedUser.username}'s Stories` : "Select a user"}</h2>
         <div className="Notes">
           {userStories.map(story => (

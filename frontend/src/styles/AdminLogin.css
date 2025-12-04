@@ -1,0 +1,135 @@
+/* AdminLogin.css (with image sized same height as login card) */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: #f8ebcf;
+}
+
+.Outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.Inner-container {
+    background: #fcf9ef;
+    width: 100%;
+    max-width: 1200px;
+    padding: 3rem;
+    border-radius: 2rem;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.admin-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.admin-subtitle {
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+/* Main Split Container */
+.Split-container {
+    display: flex;
+    gap: 2rem;
+    align-items: stretch; /* makes both sides equal height */
+}
+
+/* LEFT IMAGE SECTION MATCHES RIGHT CARD HEIGHT */
+.Image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1.2rem;
+    padding: 2rem;
+}
+
+/* Image scales nicely */
+.Image-placeholder img {
+    width: 100%;
+    max-width: 400px; /* bigger image */
+    height: auto;
+}
+
+/* Form Section */
+.Form-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Login-card {
+    background: #dcd7f5;
+    padding: 2rem;
+    border-radius: 1.2rem;
+    width: 100%;
+    max-width: 620px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    height: 100%;
+    padding: 1rem;
+}
+
+.user-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+}
+
+.user-input label {
+    align-self: flex-start;
+}
+
+.user-input input {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #dcdcdc;
+    background-color: #f7f7ff;
+}
+
+.form-button {
+    width: 30%;
+    padding: 0.8rem;
+    background: #d8f4e3;
+    border: 1px solid #00000040;
+    border-radius: 0.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.form-button:hover {
+    transform: scale(1.05);
+}
+
+.Login-footer {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: #6b5a85;
+}
+
+@media (max-width: 900px) {
+    .Split-container {
+        flex-direction: column;
+    }
+
+    .Image-section, .Form-section {
+        max-width: 100%;
+    }
+
+    .Image-placeholder img {
+        max-width: 250px;
+    }
+}

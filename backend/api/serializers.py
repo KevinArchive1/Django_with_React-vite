@@ -4,9 +4,20 @@ from .models import Note, Chapter
 
 # ----------------- User Serializer -----------------
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
-        fields = ["id", "username", "email", "is_staff"]
+        fields = ["id", "username", "email", "is_staff", "password"]
+
+    def create(self, validated_data):
+        # Use create_user to hash the password properly
+        user = User.objects.create_user(
+            username=validated_data["username"],
+            email=validated_data.get("email", ""),
+            password=validated_data["password"]
+        )
+        return user
 
 # ----------------- Note Serializer (for Users) -----------------
 class NoteSerializer(serializers.ModelSerializer):

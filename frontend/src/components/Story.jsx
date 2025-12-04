@@ -85,6 +85,7 @@ function Story({
           <h2>{story.title}</h2>
           <p className="story-author">by {story.author_username}</p>
           {story.genre && <p className="story-genre">Genre: {story.genre}</p>}
+          <h3>Synopsis:</h3>
           <div className="story-description">
             <ReactMarkdown>{story.content}</ReactMarkdown>
           </div>
