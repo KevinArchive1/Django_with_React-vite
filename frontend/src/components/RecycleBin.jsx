@@ -45,12 +45,14 @@ function RecycleBin({ isOpen, onClose, refresh }) {  // <-- add refresh prop
             <div key={note.id} className="note-container">
               <p className="note-title">{note.title}</p>
               <div className="note-content">{note.content}</div>
-              <button className="restore-btn" onClick={() => restoreNote(note.id)}>
-                Restore
-              </button>
-              <button className="delete-btn" onClick={() => permanentDelete(note.id)}>
-                Delete Permanently
-              </button>
+              <div className="note-button-holder">
+                <button className="restore-btn" onClick={() => restoreNote(note.id)}>
+                  Restore
+                </button>
+                <button className="delete-btn" onClick={() => permanentDelete(note.id)}>
+                  Delete Permanently
+                </button>
+              </div>
             </div>
           ))}
         </div>

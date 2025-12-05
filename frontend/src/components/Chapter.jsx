@@ -4,7 +4,7 @@
   import api from "../api";
   import remarkBreaks from "remark-breaks";
 
-  function Chapter({ chapter, storyId, disabled, refresh }) {
+  function Chapter({ chapter, storyId, disabled, refresh, readOnly = false}) {
     const [isEditingChapter, setIsEditingChapter] = useState(false);
     const [editTitle, setEditTitle] = useState(chapter.title);
     const [editContent, setEditContent] = useState(chapter.content);
@@ -45,11 +45,13 @@
               }}
               onFocus={() => setIsContentFocused(true)} // user clicked content
             />
-            <button onClick={handleSaveChapter}>Save Chapter</button>
-            <button onClick={() => {
-              setIsEditingChapter(false);
-              setIsContentFocused(false);
-            }}>Cancel</button>
+            <div className="chapter-buttons">
+              <button onClick={handleSaveChapter}>Save Chapter</button>
+              <button onClick={() => {
+                setIsEditingChapter(false);
+                setIsContentFocused(false);
+              }}>Cancel</button>
+            </div>
           </>
         ) : (
           <>
@@ -57,9 +59,11 @@
             <div className="chapter-content">
               <ReactMarkdown remarkPlugins={[remarkBreaks]}>{chapter.content}</ReactMarkdown>
             </div>
-            <button onClick={() => setIsEditingChapter(true)} disabled={disabled}>
-              Edit Chapter
-            </button>
+            {!readOnly && (
+              <button onClick={() => setIsEditingChapter(true)} disabled={disabled}>
+                Edit Chapter
+              </button>
+            )}
           </>
         )}
       </div>

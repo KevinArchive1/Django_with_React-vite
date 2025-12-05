@@ -3,6 +3,7 @@ import api from "../api";
 import Story from "../components/Story";
 import RecycleBin from "../components/RecycleBin";
 import { Link } from "react-router-dom";
+import Discover from "./Discover";
 import "../styles/Home.css";
 import AddImage from "../assets/plus.png"
 
@@ -59,7 +60,13 @@ function Home() {
         setExpandedCard(null);
       }
     })
-    .catch(err => alert(err));
+    .catch(err => {
+      const message = err.response?.data?.message 
+                   || err.response?.data?.content?.[0]
+                   || "An error occurred";
+      alert(message);
+    });
+    
   };
 
   const editStory = (id, title, content, genre) => {
@@ -86,6 +93,9 @@ function Home() {
       {/* Navigation */}
       <div className="navigationBar">
         <h4>Welcome</h4>
+        <Link to="/discover">
+          <button className="discover-btn">Discover</button>
+        </Link>
         <div className="nav-buttons">
           <button onClick={() => setIsRecycleOpen(true)}>Recycle Bin</button>
           <Link to="/logout"><button>Logout</button></Link>
@@ -162,8 +172,8 @@ function Home() {
                 onDeleteStory={deleteStory}
                 disabled={expandedCard !== null && expandedCard !== story.id}
                 refresh={fetchStories}
-                showCloseButton={true} // new prop
-                onClose={() => setExpandedCard(null)} // new prop
+                showCloseButton={true} 
+                onClose={() => setExpandedCard(null)} 
               />
             ))}
 

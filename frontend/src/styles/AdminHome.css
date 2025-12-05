@@ -71,9 +71,14 @@ body, html {
     border-right: 2px solid var(--sidebar-border);
 }
 
+.admin-sidebar h3 {
+    padding: 0 0 1rem 0;
+}
+
 .search-holder {
     align-self: flex-start;
     width: 100%;
+    overflow-y: scroll;
 }
 
 @keyframes gradientSlide {
@@ -102,18 +107,18 @@ body, html {
 
 
 /* Scrollbar  */
-.admin-sidebar::-webkit-scrollbar {
+.admin-sidebar .search-holder::-webkit-scrollbar {
     width: 12px;
 }
 
-.admin-sidebar::-webkit-scrollbar-track {
+.admin-sidebar .search-holder::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     margin: 12px 0;
     box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
 }
 
-.admin-sidebar::-webkit-scrollbar-thumb {
+.admin-sidebar .search-holder::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #6b5dd6, #3a30a9, #6b5dd6);
     border-radius: 12px;
     border: 3px solid transparent;
@@ -136,7 +141,7 @@ body, html {
 }
 
 
-.admin-sidebar {
+.admin-sidebar .search-holder {
     scrollbar-width: thin;
     scrollbar-color: #6b5dd6 rgba(255,255,255,0.05);
 }
@@ -172,6 +177,16 @@ body, html {
     border-radius: 12px;
     cursor: pointer;
     width: 100%;
+    margin-top: auto;
+    transition: transform 0.25s ease;
+    
+}
+
+.logout-button:hover {
+    transform: scale(1.02);
+    background: #f88f8f;
+    
+
 }
 
 .Content-Holder1 {

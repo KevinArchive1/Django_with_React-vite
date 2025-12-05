@@ -43,4 +43,7 @@ urlpatterns = [
     path("chapters/create/", views.ChapterCreateView.as_view(), name="chapter-create"),
     path("chapters/edit/<int:pk>/", views.ChapterEditView.as_view(), name="chapter-edit"),
     path("chapters/delete/<int:pk>/", views.ChapterDeleteView.as_view(), name="chapter-delete"),
+
+
+    path("stories/public/", views.PublicStoryListView.as_view(), name="public-stories"),
 ]

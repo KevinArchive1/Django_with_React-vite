@@ -102,15 +102,16 @@ const handleRestoreStory = async (restoredStory) => {
     <div className="Content-Holder1">
       {/* Sidebar */}
       <div className="admin-sidebar">
+      <h3>Users</h3>
+        <input
+              type="text"
+              placeholder="Search user..."
+              className="user-search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
         <div className="search-holder">
-          <h3>Users</h3>
-          <input
-            type="text"
-            placeholder="Search user..."
-            className="user-search-input"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+          
 
           <ul>
             {filteredUsers.map(user => (

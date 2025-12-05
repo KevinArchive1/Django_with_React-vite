@@ -27,10 +27,14 @@ function Form({route, method, title, subtitle}) {
 
             if (username.length < 8) {
                 setErrorMessage("Username must be at least 8 characters.");
+                setPassword("");
+                setLoading(false);
                 return;
             }
             if (password.length < 8) {
                 setErrorMessage("Password must be at least 8 characters.");
+                setPassword("");
+                setLoading(false);
                 return;
             }
             // if (!passwordRegex.test(password)) {
@@ -49,7 +53,14 @@ function Form({route, method, title, subtitle}) {
                 navigate("/login")
             }
         } catch (error) {
-            alert(error)
+            setPassword("");
+
+            // Check if server sent a message
+            if (error.response?.data?.username) {
+                setErrorMessage(error.response.data.username[0]);
+            } else {
+                setErrorMessage("An unexpected error occurred.");
+            }
         } finally {
             setLoading(false)
         }

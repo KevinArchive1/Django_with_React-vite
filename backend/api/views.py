@@ -68,7 +68,7 @@ class AdminEditStoryView(generics.UpdateAPIView):
         return Note.objects.all()
 
     def patch(self, request, *args, **kwargs):
-        kwargs['partial'] = True  # ADD THIS LINE
+        kwargs['partial'] = True
         return self.update(request, *args, **kwargs)
 
 
@@ -125,7 +125,10 @@ class NoteListCreate(generics.ListCreateAPIView):
         return Note.objects.filter(author=self.request.user, is_deleted=False)
 
     def perform_create(self, serializer):
+        print("Current user:", self.request.user)
         serializer.save(author=self.request.user)
+    
+    
 
 
 class EditNote(generics.UpdateAPIView):
@@ -267,3 +270,11 @@ class ChapterDeleteView(generics.DestroyAPIView):
 
         return Chapter.objects.filter(story__author=user)
 
+# ----------------- PUBLIC STORIES (Anyone can view) -----------------
+class PublicStoryListView(generics.ListAPIView):
+    serializer_class = NoteSerializer
+    permission_classes = [permissions.AllowAny]  # Anyone can access
+
+    def get_queryset(self):
+        # Only show non-deleted public stories
+        return Note.objects.filter(is_deleted=False).select_related('author').prefetch_related('chapters')

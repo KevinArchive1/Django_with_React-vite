@@ -21,6 +21,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 # ----------------- Note Serializer (for Users) -----------------
 class NoteSerializer(serializers.ModelSerializer):
+    content = serializers.CharField (
+        max_length=1000,
+        error_messages={
+            "max_length": "Content must be 1000 characters only."
+        }
+    )
     author_username = serializers.ReadOnlyField(source="author.username")
     chapters = serializers.SerializerMethodField(read_only=True)
 
@@ -28,14 +34,29 @@ class NoteSerializer(serializers.ModelSerializer):
         model = Note
         fields = ["id", "title", "content", "author", "author_username", "genre", "chapters", "is_deleted", "create_at"]
         read_only_fields = ["author", "is_deleted", "create_at", "chapters"]
+        extra_kwargs = {
+            "content": {
+                "error_messages": {
+                    "max_length": "Content must be 5000 characters only."
+                }
+            }
+        }
 
     def get_chapters(self, obj):
         return ChapterSerializer(obj.chapters.order_by("chapter_number"), many=True).data
 
 # ----------------- Admin Note Serializer -----------------
 class AdminNoteSerializer(serializers.ModelSerializer):
+    content = serializers.CharField(
+        max_length=500,
+        error_messages={
+            "max_length": "Content must be 5000 characters only."
+        }
+    )
+
     author_username = serializers.ReadOnlyField(source="author.username")
-    chapters = serializers.SerializerMethodField(read_only=True)  
+    chapters = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Note
         fields = ["id", "title", "content", "author", "author_username", "genre", "is_deleted", "create_at", "chapters"]
@@ -44,6 +65,7 @@ class AdminNoteSerializer(serializers.ModelSerializer):
     def get_chapters(self, obj):
         from .serializers import ChapterSerializer
         return ChapterSerializer(obj.chapters.order_by("chapter_number"), many=True).data
+
 
 # ----------------- Chapter Serializer -----------------
 class ChapterSerializer(serializers.ModelSerializer):

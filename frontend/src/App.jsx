@@ -8,6 +8,7 @@ import AdminHome from "./pages/AdminHome";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRecycleBin from "./components/AdminRecycleBin";
+import Discover from "./pages/Discover";
 import "./App.css"
 
 function Logout() {
@@ -25,6 +26,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/discover"
+          element={
+            <ProtectedRoute>
+              <Discover />
             </ProtectedRoute>
           }
         />

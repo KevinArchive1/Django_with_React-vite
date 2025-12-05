@@ -16,12 +16,12 @@
 .recycle-bin-container {
   background: #FAEDCB;
   padding: 20px;
-  width: 820px;
-  height: 530px;
+  width: 900px;
+  height: 650px;
   border-radius: 50px;
   position: relative;
-  overflow-y: auto;
-  scrollbar-gutter: stable both-edges;
+  /* overflow-y: auto;
+  scrollbar-gutter: stable both-edges; */
   box-sizing: border-box;
 }
 
@@ -55,6 +55,8 @@
   grid-template-columns: repeat(2, 1fr); /* FIX: keeps 2 equal columns */
   gap: 20px;
   padding: 10px;
+  overflow-y: scroll;
+  height: 500px;
 }
 
 /* Note card */
@@ -66,7 +68,8 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 260px;
+  height: 350px;
+  width: 100%;
 }
 
 .note-title {
@@ -79,16 +82,17 @@
 .note-content {
   flex-grow: 1;
   overflow-y: auto;
-  margin-bottom: 15px;
+  margin: 15px 10px 10px 0;
 }
 
 /* Buttons inside note */
-.note-container button {
+.note-container .note-button-holder button {
   cursor: pointer;
   border: none;
   border-radius: 50px;
   padding: 8px 12px;
   font-weight: 600;
+  margin: 10px 10px 10px 0  ;
 }
 
 /* Restore */
